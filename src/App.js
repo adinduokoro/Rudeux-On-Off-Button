@@ -1,19 +1,23 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleSwitch } from "./features/toggle/toggleSlice";
 
 function App() {
-  const [toggle, setToggle] = useState(false);
+  const plug = useSelector((store) => store.plug.value);
+  const dispatch = useDispatch();
 
   const handleClick = () => {
-    setToggle(!toggle);
-    console.log(toggle);
+    dispatch(toggleSwitch());
   };
 
   return (
     <div className="App">
-      <button className="btn btn-primary btn-lg" onClick={handleClick}>
-        ON
+      <button
+        className={`btn btn-${plug ? "primary" : "danger"} btn-lg`}
+        onClick={handleClick}
+      >
+        {plug ? "ON" : "OFF"}
       </button>
     </div>
   );
